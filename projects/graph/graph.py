@@ -1,6 +1,7 @@
 """
 Simple graph implementation
 """
+from collections import deque
 from util import Stack, Queue  # These may come in handy
 
 
@@ -15,27 +16,43 @@ class Graph:
         """
         Add a vertex to the graph.
         """
-        print(self.vertices)
+        # print(self.vertices)
         self.vertices[vertex_id] = set()
 
     def add_edge(self, v1, v2):
         """
         Add a directed edge to the graph.
         """
-        self.vertices[v1].add(v2)
+        if v1 in self.vertices and v2 in self.vertices:
+            self.vertices[v1].add(v2)
+        else:
+            raise IndexError('nonexistant vertex')
 
     def get_neighbors(self, vertex_id):
         """
         Get all neighbors (edges) of a vertex.
         """
-        pass  # TODO
+        return self.vertices[vertex_id]
 
     def bft(self, starting_vertex):
         """
         Print each vertex in breadth-first order
         beginning from starting_vertex.
         """
-        pass  # TODO
+        # print(f'HEEEEEYYYYYY')
+        # print(self.get_neighbors(starting_vertex))
+        queue = deque([starting_vertex])
+        visited = {starting_vertex: 0}
+        parent = {starting_vertex: None}
+        while queue:
+            current = queue.popleft()
+            for n in self.vertices[current]:
+                if n not in visited:
+                    # print(self.vertices[current])
+                    queue.append(n)
+                    visited[n] = visited[current] + 1
+                    parent[n] = current
+        return visited, parent
 
     def dft(self, starting_vertex):
         """
@@ -90,7 +107,7 @@ graph.add_edge('0', '1')
 graph.add_edge('1', '0')
 graph.add_edge('0', '3')
 graph.add_edge('3', '0')
-print(graph.vertices)
+print(graph.get_neighbors('0'))
 print('#'*80)
 if __name__ == '__main__':
     graph = Graph()  # Instantiate your graph
