@@ -41,25 +41,44 @@ class Graph:
         """
         # print(f'HEEEEEYYYYYY')
         # print(self.get_neighbors(starting_vertex))
-        queue = deque([starting_vertex])
-        visited = {starting_vertex: 0}
-        parent = {starting_vertex: None}
-        while queue:
-            current = queue.popleft()
-            for n in self.vertices[current]:
-                if n not in visited:
-                    # print(self.vertices[current])
-                    queue.append(n)
-                    visited[n] = visited[current] + 1
-                    parent[n] = current
-        return visited, parent
+        # queue = deque([starting_vertex])
+        # visited = {starting_vertex: 0}
+        # parent = {starting_vertex: None}
+        # while queue:
+        #     current = queue.popleft()
+        #     for n in self.vertices[current]:
+        #         if n not in visited:
+        #             # print(self.vertices[current])
+        #             queue.append(n)
+        #             visited[n] = visited[current] + 1
+        #             parent[n] = current
+        # return visited, parent
+        q = Queue()
+        q.enqueue(starting_vertex)
+        visited = set()
+        while q.size() > 0:
+            v = q.dequeue()
+            if v not in visited:
+                print(v)
+                visited.add(v)
+                for neighbor in self.get_neighbors(v):
+                    q.enqueue(neighbor)
 
     def dft(self, starting_vertex):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
         """
-        pass  # TODO
+        q = Stack()
+        q.push(starting_vertex)
+        visited = set()
+        while q.size() > 0:
+            v = q.pop()
+            if v not in visited:
+                print(v)
+                visited.add(v)
+                for neighbor in self.get_neighbors(v):
+                    q.push(neighbor)
 
     def dft_recursive(self, starting_vertex):
         """
