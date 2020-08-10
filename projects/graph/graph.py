@@ -3,9 +3,11 @@ Simple graph implementation
 """
 from util import Stack, Queue  # These may come in handy
 
+
 class Graph:
 
     """Represent a graph as a dictionary of vertices mapping labels to edges."""
+
     def __init__(self):
         self.vertices = {}
 
@@ -13,13 +15,14 @@ class Graph:
         """
         Add a vertex to the graph.
         """
-        pass  # TODO
+        print(self.vertices)
+        self.vertices[vertex_id] = set()
 
     def add_edge(self, v1, v2):
         """
         Add a directed edge to the graph.
         """
-        pass  # TODO
+        self.vertices[v1].add(v2)
 
     def get_neighbors(self, vertex_id):
         """
@@ -76,6 +79,19 @@ class Graph:
         """
         pass  # TODO
 
+
+print('#'*80)
+graph = Graph()  # Instantiate your graph
+graph.add_vertex('0')
+graph.add_vertex('1')
+graph.add_vertex('2')
+graph.add_vertex('3')
+graph.add_edge('0', '1')
+graph.add_edge('1', '0')
+graph.add_edge('0', '3')
+graph.add_edge('3', '0')
+print(graph.vertices)
+print('#'*80)
 if __name__ == '__main__':
     graph = Graph()  # Instantiate your graph
     # https://github.com/LambdaSchool/Graphs/blob/master/objectives/breadth-first-search/img/bfs-visit-order.png
