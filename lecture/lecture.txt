@@ -1,0 +1,64 @@
+Graph Terminology
+_________________
+Nodes / Vertexes, Vertices - -the data components of the graph
+Edges - -the connections between Nodes
+
+Directed - - One way edges
+Undirected - - Multi way edges
+
+Cyclic - - there is a 'loops'
+Acyclic - - There is no loops
+
+Dense Graph - - high ratio of edges to nodes
+Sparce Graph - - high ratio of nodes to edges
+
+Weighted - - edges have associated weights
+Unweighted - - edges do not, are all the same weights
+
+
+Graph Reps
+_________________
+Adjacency Matrix:
+    # f
+    # r
+    # o
+    # m
+.   A   B   C   E  # To
+
+A   F   T   T   T
+
+B   F   F   F   T
+
+C   F   F   F   F
+
+E   F   F   F   F
+
+#################
+
+.   A   B   C   E
+
+A   0   5   1   2
+
+B   0   0   0   8
+
+C   0   0   0   0
+
+E   0   0   0   0
+
+Adjacency List:
+
+A: [B, C, E]
+B: [E]
+C: []
+E: []
+
+
+Breadth - First Traversal:
+init: add startign node to the queue
+
+while queue is not empty:
+    deque a node
+    if visited, ignore it
+    else:
+        add all nodes neighbors to
+        mark node as visited
