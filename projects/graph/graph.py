@@ -65,28 +65,21 @@ class Graph:
                 for neighbor in self.get_neighbors(v):
                     s.push(neighbor)
 
-    def dft_recursive(self, starting_vertex, visited=list()):
+    def dft_recursive(self, starting_vertex, s=Stack(), visited=set()):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
 
         This should be done using recursion.
         """
-
-        # print('*'*80)
-        # print(starting_vertex)
-        # print(starting_vertex)
-        # if starting_vertex not in visited:
-        #     for neighbor in self.get_neighbors(starting_vertex):
-        #         visited.append(starting_vertex)
-        #         # print(neighbor)
-        #         # print(starting_vertex)
-
-        #         return self.dft_recursive(neighbor)
-        # # print(f'ehydasf {visited}')
-        # return visited
-        # # print(f'here: {visited}')
-        # # print('*'*80)
+        s.push(starting_vertex)
+        if s.size() > 0:
+            v = s.pop()
+            if v not in visited:
+                print(v)
+                visited.add(v)
+                for neighbor in self.get_neighbors(v):
+                    self.dft_recursive(neighbor)
 
     def bfs(self, starting_vertex, destination_vertex):
         """
@@ -154,21 +147,8 @@ class Graph:
 
         This should be done using recursion.
         """
-        pass  # TODO
 
 
-# print('#'*80)
-# graph = Graph()  # Instantiate your graph
-# graph.add_vertex('0')
-# graph.add_vertex('1')
-# graph.add_vertex('2')
-# graph.add_vertex('3')
-# graph.add_edge('0', '1')
-# graph.add_edge('1', '0')
-# graph.add_edge('0', '3')
-# graph.add_edge('3', '0')
-# print(graph.get_neighbors('0'))
-# print('#'*80)
 if __name__ == '__main__':
     graph = Graph()  # Instantiate your graph
     # https://github.com/LambdaSchool/Graphs/blob/master/objectives/breadth-first-search/img/bfs-visit-order.png
