@@ -63,7 +63,7 @@ print('#-' * 30)
 inv = {'n': 's', 's': 'n', 'e': 'w', 'w': 'e', }
 
 
-def find_all_rooms(players_room, information=None):
+def find_all_rooms(players_room, information=None, send_this=None):
     s = Stack()
     if information is None:
         information = dict()
@@ -74,16 +74,34 @@ def find_all_rooms(players_room, information=None):
         for directions in players_room.get_exits():
             if directions not in information[players_room.id]:
                 information[players_room.id][directions] = '?'
+    else:
+        for directions in players_room.get_exits():
+            if directions not in information[players_room.id]:
+                information[players_room.id][directions] = '?'
+    if send_this is not None:
+        information[players_room.id][send_this[1]] = send_this[0]
     # print(player.current_room.get_room_in_direction('s').id)
     for direction in information[players_room.id]:
-        print(direction, player.current_room.get_room_in_direction(direction).id)
+        # print(direction, player.current_room.get_room_in_direction(direction).id)
+        print(information[player.current_room.id][direction])
+        print(player.current_room.get_room_in_direction(direction).id)
         if player.current_room.get_room_in_direction(direction).id not in information or information[player.current_room.id][direction] == '?':
+            print(send_this)
+            send_this = [player.current_room.id, inv[direction]]
+            print(send_this)
+
             information[player.current_room.id][direction] = player.current_room.get_room_in_direction(
                 direction).id
-
             player.travel(direction)
+            if player.current_room.id not in visited_rooms:
+                visited_rooms.add(player.current_room.id)
+                # information[player.current_room.id] = dict()
+                # information[player.current_room.id][inv[direction]
+                #                                     ] = players_room.id
 
-            find_all_rooms(player.current_room, information)
+            find_all_rooms(player.current_room, information, send_this)
+        else:
+            return
     # for adj_rooms in information[player.current_room.id]:
     #     # print(players_room.id)
     #     # print(player.current_room.id, adj_rooms)
