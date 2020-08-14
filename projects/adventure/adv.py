@@ -49,42 +49,60 @@ traversal_path.append(player.current_room.id)
 
 print('#-' * 30)
 
-information = dict()
 
+def find_all_rooms(players_room, information=None):
+    if information is None:
+        information = dict()
+    # s = Stack()
+    # s.push(players_room)
+    # while s.size() > 0:
+    #     v = s.pop()
+    # print(v)
+    # print(v.get_exits())
 
-def find_all_rooms(players_room):
-    s = Stack()
-    s.push(players_room)
-    while s.size() > 0:
-        v = s.pop()
-        # print(v)
-        # print(v.get_exits())
+    for directions in players_room.get_exits():
+        # print(directions)
+        if players_room.id not in information:
+            information[players_room.id] = dict()
+        if directions not in information[players_room.id]:
+            information[players_room.id][directions] = '?'
+    # print(information[players_room.id])
+
+    for real_directions in information[players_room.id]:
+        print(information[players_room.id][real_directions])
         if player.current_room.id not in visited_rooms:
             visited_rooms.add(player.current_room.id)
         traversal_path.append(player.current_room.id)
 
-        for directions in v.get_exits():
-            # print(directions)
-            if players_room.id not in information:
-                information[players_room.id] = dict()
-            if directions not in information[players_room.id]:
-                information[players_room.id][directions] = '?'
-        # print(information[players_room.id])
+        if information[players_room.id][real_directions] == '?':
 
-        for real_directions in information[players_room.id]:
-            print(information[players_room.id][real_directions])
-            if information[players_room.id][real_directions] == '?':
-                print(real_directions)
-                player.travel(real_directions)
-                print(player.current_room)
-                s.push(player.current_room)
-                # player.travel(real_directions)
+            print(real_directions)
+            player.travel(real_directions)
+
+            information[players_room.id][real_directions] = player.current_room.id
+            if real_directions == 'n':
+                print(players_room.id)
+            #     print(information[players_room.id])
+            # information[player.current_room.id][]
+            # if real_directions == 's':
+            #     information[player.current_room.id]['n'] = traversal_path[-1]
+            # if real_directions == 'w':
+            #     information[player.current_room.id]['e'] = traversal_path[-1]
+            # if real_directions == 'e':
+            #     information[player.current_room.id]['w'] = traversal_path[-1]
+            print(player.current_room)
+            print(information)
+            print(f'traversal_path {traversal_path}')
+            print(f'visited rooms: {visited_rooms}')
+            find_all_rooms(player.current_room, information)
+            # s.push(player.current_room)
+            # player.travel(real_directions)
 
         # for d in v.get_exits():
 
 
 find_all_rooms(player.current_room)
-print(information)
+# print(information)
 print(f'traversal_path {traversal_path}')
 print(f'visited rooms: {visited_rooms}')
 
